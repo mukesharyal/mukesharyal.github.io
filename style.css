@@ -1,0 +1,393 @@
+body{
+    background-color: #FDFDFA;
+    text-align: center;
+    padding-top: 4rem;
+    line-height: 1.5;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.nav-container{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #FDFDFA;
+    z-index: 10;
+    align-items: center;
+}
+
+.logo{
+    text-decoration: none;
+    color: inherit;
+    font-size: clamp(0.3rem, 5vw, 2rem);
+}
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    color: inherit;
+    background-color: #FDFDFA;
+}
+
+.nav-list li a {
+    text-decoration: none;
+    color: inherit;
+    font-size: clamp(0.2rem, 3vw, 1.2rem);
+}
+
+#hamburger{
+    width: clamp(0.2rem, 5vw, 2rem);
+    cursor: pointer;
+    display: none;
+}
+
+
+
+.intro h1{
+    font-weight: 200;
+    font-size: clamp(0.4rem, 10vw, 4rem);
+}
+
+.intro h2{
+    font-weight: 300;
+    font-size: clamp(0.3rem, 8vw, 2.5rem);
+    line-height: 1.5;
+}
+
+.writer::after{
+    content: "writer";
+    font-weight: bold;
+    color: #FF6A49;
+    animation: typeWriter 1.5s step-end infinite;
+}
+
+.animated-code::after {
+    content: "</code>";
+    font-weight: bold;
+    color: #0095B6;
+    animation: cycleCode 1.5s step-end infinite;
+}
+
+@keyframes typeWriter {
+    0%   { content: "w▮"; }
+    20%  { content: "wr▮"; }
+    40%  { content: "wri▮"; }
+    60%    { content: "writ▮"; }
+    70%    { content: "write▮"; }
+    90%    { content: "writer▮"; }
+    100%  { content: "writer" }
+
+}
+
+@keyframes cycleCode {
+    0%   { content: "<code>"; }
+    50%  { content: "</code>"; }
+    100%  { content: "<code>"; }
+}
+
+
+.portion{
+    margin-top: 5vh;
+    padding: 0.5rem;
+}
+
+#about{
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#about .image-wrapper{
+    height: 40vh;
+    border-radius: 0.5rem;
+    margin: 2vh;
+    position: relative;
+    box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.2);
+}
+
+#about .image-wrapper img{
+    height: 100%;
+    border-radius: 0.5rem;
+    display: block;
+    min-width: 0;
+    min-height: 0;
+}
+
+#about .image-wrapper svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+
+.portion header h2{
+    font-size: clamp(0.3rem, 8vw, 2.5rem);
+    font-weight: 300;
+}
+
+#about dl{
+    font-size: clamp(0.25rem, 6vw, 1.75rem);
+    line-height: 1.5;
+}
+
+#about dl dt{
+    font-weight: bold;
+}
+
+#about dl dd{
+    margin: 0;
+}
+
+#about dl dd strong{
+    font-weight: normal;
+}
+
+#about dl dd em{
+    font-size: clamp(0.25rem, 3vw, 1rem);
+    font-style: normal;
+    font-weight: bold;
+    background-color: #FF6A49;
+    color: white;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 5vh;
+    background-color: #FBF9F4;
+}
+
+.container article{
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+}
+
+.container .about{
+    width: 20vw;
+    padding: 4vh 4vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4vh;
+    align-items: center;
+}
+
+.container .about .project-icon{
+    display: inline-block;
+    background-color: white;
+    height: 10vw;
+    width: 10vw;
+    border-radius: 6vw;
+    box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.2);
+}
+
+.container .about h3{
+    font-size: clamp(0.2rem, 6vw, 2rem);
+    font-weight: 300;
+}
+
+.container .desc{
+    width: 76vw;
+    padding: 4vh 4vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3vh;
+}
+
+.container .desc time{
+    display: inline-block;
+    background-color: #F5EEE1;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: clamp(0.1rem, 4vw, 1.5rem);
+}
+
+.container .desc p{
+    font-size: clamp(0.15rem, 5vw, 1.75rem);
+}
+
+.container .desc .tech, .container .desc .links{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2vw;
+}
+
+.container .desc .tech data{
+    display: inline-block;
+    background-color: #F5EEE1;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: clamp(0.1rem, 4vw, 1.5rem);
+}
+
+.container .desc a{
+    display: inline-block;
+    background-color: #FF6A49;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: clamp(0.1rem, 4vw, 1.5rem);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+#contact ul{
+    display: flex;
+    list-style: none;
+    padding: 5vw 4vh;
+    justify-content: space-between;
+}
+
+#contact ul li svg{
+    width: 10vw;
+    height: 10vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  @media (max-width: 600px) {
+
+    #hamburger{
+        display: block;
+    }
+
+    .nav-list {
+      display: none;
+      position: absolute;
+      flex-direction: column;
+      top: 100%;
+      right: 0;
+      left: 0;
+      padding: 1rem;
+      margin: 0;
+      text-align: left;
+    }
+
+    .nav-list.open{
+        display: flex;
+    }
+
+    
+
+   
+  }
+
+
+
+  @media (max-width: 1200px) {
+
+    #about{
+        margin: unset;
+    }
+
+    .container{
+        background-color: unset;
+    }
+
+    .container article{
+        flex-direction: column;
+        gap: unset;
+    }
+
+    .container .about{
+        width: unset;
+        gap: 1vh;
+    }
+
+    .container .about .project-icon{
+        width: 20vw;
+        height: 20vw;
+        border-radius: 10vw;
+    }
+
+    .container .desc{
+        width: unset;
+    }
+
+    .container .desc .tech{
+        flex-direction: column;
+    }
+
+    .container .desc .links{
+        margin-top: 4vh;
+    }
+
+   
+  }
+
+  
