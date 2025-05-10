@@ -1,7 +1,10 @@
 const hamburger = document.querySelector('#hamburger');
 const navList = document.querySelector('.nav-list');
-const image = document.querySelector('#portrait');
-const loadingImage = document.querySelector('#loadingImage');
+let image = document.querySelector('#portrait');
+let loadingImage = document.querySelector('#loadingImage');
+
+console.log(image);
+console.log(loadingImage);
 
 hamburger.addEventListener('click', () => {
   navList.classList.toggle('open');

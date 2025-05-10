@@ -108,6 +108,7 @@ body{
 
 #about .image-wrapper{
     height: 40vh;
+    aspect-ratio: 3/4;
     border-radius: 0.5rem;
     margin: 2vh;
     position: relative;
@@ -128,7 +129,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: red;
+    background-color: white;
 }
 
 
