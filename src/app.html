@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style>
+
+			:root{
+				--primary-background: #FFFFFF;
+				--secondary-background: #EEF6F7;
+				--text-color: #1A3438;
+			}
+
+			@media (prefers-color-scheme: dark)
+			{
+				:root{
+					--primary-background: #222831;
+					--secondary-background: #1B2027;
+					--text-color: #EEEEEE;
+				}
+			}
+
+			html{
+				font-size: clamp(1rem, 1.25vw, 1.25rem);
+				font-family: Georgia, "Times New Roman", Times, serif;
+			}
+
+			body{
+				margin: 0;
+				padding-top: 4rem;
+				background-color: var(--primary-background);
+				color: var(--text-color);
+			}
+		</style>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
