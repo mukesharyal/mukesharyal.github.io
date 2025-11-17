@@ -28,7 +28,3 @@ Thumbs.db
 coverage/
 *.lcov
 
-# Optional: Generated lock files (if not using git)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
