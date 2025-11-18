@@ -90,7 +90,7 @@
     }
 
     .nav-list li a:hover{
-        background-color: #CCE5E9;
+        background-color: var(--primary-background);
     }
 
     .nav-list li a {

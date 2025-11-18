@@ -51,7 +51,7 @@
 
         <div class="blogs-container">
 
-            <a class="blog" href={LinkHandler('/blog/{url}')}>
+            <a class="blog" href={LinkHandler(`/blog/${url}`)}>
 
         
                 <figure>
