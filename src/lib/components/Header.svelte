@@ -1,6 +1,8 @@
 <script>
 
-    import { draw, fade, fly } from "svelte/transition";
+    import { draw } from "svelte/transition";
+
+    import { LinkHandler } from "$lib";
     
     let isOpen = $state(false);
 
@@ -10,7 +12,7 @@
 
 <nav aria-label="Main Navigation" class="nav-container">
 
-    <a href="/" class="logo" aria-label="Homepage">
+    <a href={LinkHandler('/')} class="logo" aria-label="Homepage">
       मुकेश अर्याल
     </a>
 
@@ -37,9 +39,9 @@
 
 
     <ul class="nav-list { isOpen ? 'open' : 'closed' }">
-        <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
-        <li class="nav-item"><a href="/" class="nav-link">Projects</a></li>
-        <li class="nav-item"><a href="/" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href={LinkHandler('/blog')} class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href={LinkHandler('/')} class="nav-link">Projects</a></li>
+        <li class="nav-item"><a href={LinkHandler('/')} class="nav-link">Contact</a></li>
     </ul>
 
 

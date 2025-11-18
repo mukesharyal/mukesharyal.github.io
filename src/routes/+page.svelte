@@ -3,7 +3,7 @@
 
     import BlogCard from "$lib/components/BlogCard.svelte";
 
-    import { posts } from "$lib";
+    import { LinkHandler, posts } from "$lib";
 
     const { url, title, date, hero, alt, description } = posts[posts.length - 1];
 
@@ -51,12 +51,12 @@
 
         <div class="blogs-container">
 
-            <a class="blog" href="/blog/{url}">
+            <a class="blog" href={LinkHandler('/blog/{url}')}>
 
         
                 <figure>
 
-                    <img src={hero} alt={alt} />
+                    <img src={LinkHandler(hero)} alt={alt} />
 
                     <figcaption>
 

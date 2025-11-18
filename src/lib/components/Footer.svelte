@@ -1,8 +1,12 @@
+<script>
+    import { LinkHandler } from "$lib";
+
+</script>
 <footer class="footer">
   <p>© 2025 Mukesh Aryal. All rights reserved.</p>
   <ul class="links">
-    <li><a href="/">Find me on Twitter</a></li>
-    <li><a href="/">Privacy Policy</a></li>
+    <li><a href={LinkHandler('/')}>Find me on Twitter</a></li>
+    <li><a href={LinkHandler('/')}>Privacy Policy</a></li>
   </ul>
 </footer>
 

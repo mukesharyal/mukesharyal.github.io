@@ -1,4 +1,6 @@
 <script>
+    import { LinkHandler } from "$lib";
+
 
     const { fileName } = $props();
 
@@ -16,7 +18,7 @@
 
     <div class="card">
 
-        <img src={img} alt={title} />
+        <img src={LinkHandler(img)} alt={title} />
 
         <div class="details">
             <h3>

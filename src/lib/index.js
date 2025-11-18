@@ -1,5 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 
+import { base } from '$app/paths'
+
 export const posts = [
   
     {
@@ -14,3 +16,18 @@ export const posts = [
     }
 
 ]
+
+
+
+export const LinkHandler = (link) => {
+    
+  if (process.env.NODE_ENV === 'development') {
+    return link
+  }
+
+  if (link === '/') {
+    return base
+  }
+
+  return base + link
+}
