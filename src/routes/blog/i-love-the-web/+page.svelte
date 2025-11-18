@@ -1,19 +1,33 @@
 <script>
     import Footer from "$lib/components/Footer.svelte";
+    import Outline from "$lib/components/Outline.svelte";
+
+    import { onMount } from "svelte";
+
+    let elements = $state(null);
+
+    onMount(() => {
+
+        elements = Array.from(container.querySelectorAll("section")).filter((section) => section.querySelector("h1"));
+    })
+
+    let container;
 
 </script>
+
+
 
 
 <div class="blog-container">
 
     <div class="content">
     
-        <main class="main">
+        <main class="main" bind:this={container}>
 
             <header class="header">
 
                 <h1>
-                    I ❤️ The Web
+                    About The Web
                 </h1>
 
                 <h2>
@@ -31,7 +45,7 @@
 
 
 
-            <section id="intro">
+            <section>
 
                 <header>
 
@@ -62,7 +76,7 @@
 
 
 
-            <section id="beginning">
+            <section>
 
                 <h1>
                     The Humble Beginnings
@@ -258,12 +272,23 @@
 
             </section>
 
+
+            <footer>
+                We will need some more things here!!!
+            </footer>
+
         </main>
 
     </div>
 
     <div class="outlines">
-       There
+
+        {#if elements }
+
+            <Outline {elements} />    
+
+        {/if}
+       
     </div>
 
 </div>
@@ -282,7 +307,8 @@
     .outlines{
         position: fixed;
         top: 20%;
-        right: 1rem;
+        right: 0;
+        height: 40%;
     }
 
     .content{
@@ -291,6 +317,14 @@
 
     .main{
         font-size: 1.25rem;
+    }
+
+    .main section h1{
+        position: sticky;
+        top: 4rem;
+        background-color: var(--primary-background);
+        padding-block: 1rem;
+        margin-block: 1rem;
     }
 
     .main a{

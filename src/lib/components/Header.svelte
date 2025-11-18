@@ -103,12 +103,12 @@
     #hamburger{
         display: none;
         border: none;
-        padding: 0;
+        padding: 0.25rem;
         background-color: transparent;
     }
 
     #hamburger svg{
-        width: 1.5rem;
+        height: 1.5rem;
         stroke: var(--text-color);
     }
 
@@ -121,7 +121,9 @@
     @media (max-width: 600px) {
 
         #hamburger{
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-list {
