@@ -1,5 +1,6 @@
 <script>
-    import Footer from "$lib/components/Footer.svelte";
+    import { LinkHandler } from "$lib";
+import Footer from "$lib/components/Footer.svelte";
     import Outline from "$lib/components/Outline.svelte";
 
     import { onMount } from "svelte";
@@ -50,7 +51,7 @@
                 <header>
 
                     <figure>
-                        <img src="/undersea-cables.png" alt="Map of Undersea Cables" />
+                        <img src={LinkHandler('/undersea-cables.png')} alt="Map of Undersea Cables" />
 
                         <figcaption>
                             The map of the undersea cables that carry the internet.
