@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
     import { LinkHandler } from "$lib";
 
 
@@ -55,4 +55,4 @@
     .card .details p{
         margin: 0;
     }
-</style>
+</style> -->
