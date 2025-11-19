@@ -1,6 +1,6 @@
 <script>
 
-    import { fade } from "svelte/transition";
+    import { draw, fade } from "svelte/transition";
 
     let { elements } = $props();
 
@@ -8,20 +8,25 @@
     let canvasWidth = $state(null);
 
     let scrollDistance = $state(0);
+    let startElement = $state(0);
+
+    let outlineContainer;
+
+    let shown = $state(false);
 
 
-    let lastCall = 0;
-    const throttleTime = 100; 
+    let lastCallScroll = 0;
+    const throttleTime = 100;
+    
+    let lastCallPointerMove = 0;
 
     function handleScroll() {
 
         const now = Date.now();
 
-        if (now - lastCall >= throttleTime) {
-            lastCall = now;
+        if (now - lastCallScroll >= throttleTime) {
 
-            let startElement = 0;
-            let endElement = 0;
+            lastCallScroll = now;
 
             if(window.scrollY < elements[0].offsetTop)
             {
@@ -31,11 +36,9 @@
 
             if(window.scrollY > elements[elements.length - 1].offsetTop)
             {
-                scrollDistance = canvasHeight - 20;
+                scrollDistance = canvasHeight;
                 return;
             }
-
-            // We are starting to scroll past the current section
 
             for(let i = 0; i < elements.length - 1; i++)
             {
@@ -49,9 +52,35 @@
                 }
             }
 
-            endElement = startElement + 1;
+            let endElement = startElement + 1;
 
-            scrollDistance = (endElement - 1) * ((canvasHeight - 20) / (elements.length - 1)) + (window.scrollY - elements[startElement].offsetTop) / (elements[endElement - 1 ].scrollHeight) * ((canvasHeight - 20) / (elements.length - 1));
+            scrollDistance = (endElement - 1) * ((canvasHeight) / (elements.length - 1)) + (window.scrollY - elements[startElement].offsetTop) / (elements[endElement - 1 ].scrollHeight) * ((canvasHeight) / (elements.length - 1));
+        }
+    }
+
+    function handleTouch(event)
+    {
+
+        const now = Date.now();
+
+        if(now - lastCallPointerMove >= throttleTime)
+        {
+            lastCallPointerMove = now;
+
+            let elementIndex = (event.clientY - outlineContainer.getBoundingClientRect().top) / (canvasHeight) * (elements.length - 1);
+
+            if(elementIndex < 0)
+            {
+                return;
+            }
+
+            let elementTop = elements[Math.floor(elementIndex)].getBoundingClientRect().top;
+
+            let elementHeight = elements[Math.floor(elementIndex)].clientHeight;
+
+            elements[Math.floor(elementIndex)].scrollIntoView();
+
+            window.scrollBy(0, (elementIndex - Math.floor(elementIndex)) * elementHeight);
         }
     }
 
@@ -61,26 +90,19 @@
 <svelte:window on:scroll={handleScroll} />
 
 
-<svg class="outline" transition:fade width="2rem" height="100%" bind:clientHeight={canvasHeight} bind:clientWidth={canvasWidth} >
+<svg aria-hidden="true" bind:this={outlineContainer} class={`outline ${ shown ? 'shown' : '' }`} onblur={() => { shown = false; }} onclick={() => { shown = !shown; }} onpointermove={handleTouch} transition:fade width="2rem" height="100%" bind:clientHeight={canvasHeight} bind:clientWidth={canvasWidth} >
 
-    <line x1={ canvasWidth / 2 } y1={ 10 } x2={ canvasWidth / 2 } y2={ canvasHeight - 10 } stroke-width={ 1 } stroke="#FFC299" ></line>
+    <line x1={ canvasWidth / 2 } y1={ 0 } x2={ canvasWidth / 2 } y2={ canvasHeight } stroke-width={ 15 } stroke="#FFC299" stroke-linecap="round" ></line>
 
-    <line x1={ canvasWidth / 2 } y1={ 10 } x2={ canvasWidth / 2 } y2={ 10 + scrollDistance } stroke-width={ 2 } stroke="#ff6600" ></line>
+    {#if scrollDistance > 0}
+
+        <line x1={ canvasWidth / 2 } y1={ 0 } x2={ canvasWidth / 2 } y2={ scrollDistance } stroke-width={ 15 } stroke="#ff6600" stroke-linecap="round" ></line>
+
+    {/if}
 
     {#each elements as element, index }
 
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <g tabindex="0" role="menuitem" aria-roledescription="Menu for the different headings" class="circle-group"  onclick={() => { element.scrollIntoView();}}>
-        <circle class="larger-circle" cx={ canvasWidth / 2 } cy={ 10 + index * ((canvasHeight - 20) / (elements.length - 1)) } r={ 25 } ></circle>
-        <circle class="smaller-circle" cx={ canvasWidth / 2 } cy={ 10 + index * ((canvasHeight - 20) / (elements.length - 1)) } r={ 5 } stroke-width={ 2 } stroke="#ff6600" ></circle>
-    
-    <text x={ canvasWidth / 2 - 20 } y={ 15 + index * ((canvasHeight - 20) / (elements.length - 1)) }>
-        { element.querySelector("h1").textContent }
-    </text>
-    
-    
-    </g>
-
+        <circle class="circle" cx={ canvasWidth / 2 } cy={ index * ((canvasHeight) / (elements.length - 1)) } r={ 5 } ></circle>
 
     {/each}
 
@@ -91,44 +113,30 @@
 
 <style>
 
-    .circle-group text{
-        fill: #ff6600;
-        text-anchor: end;
-        visibility: hidden;
-    }
-
-    .circle-group:focus{
-        outline: none;
-    }
-
-    .circle-group:hover text, .circle-group:focus text{
-        visibility: visible;
-    }
-
-    .circle-group:foc text{
-        visibility: visible;
-    }
-
-
     .outline{
         cursor: pointer;
         overflow: visible;
+        touch-action: none;
+        transition: transform 200ms ease-in-out;
     }
 
-    .circle-group .smaller-circle{
-        transform-origin: center;
-        transform-box: fill-box;
+    .outline:focus{
+        outline: none;
+    }
+
+    .circle{
         fill: var(--primary-background);
-        transition: all 200ms ease-in-out;
-        border: 100px solid transparent;
     }
 
-    .circle-group .larger-circle{
-        fill: transparent;
+    @media (max-width: 600px)
+    {
+        .outline{
+            transform: translateX(50%);
+        }
+
+        .outline.shown{
+            transform: translateX(0);
+        }
     }
 
-    .circle-group:hover .smaller-circle, .circle-group:focus .smaller-circle {
-        transform: scale(1.5);
-        fill: #ff6600;
-    }
 </style>
