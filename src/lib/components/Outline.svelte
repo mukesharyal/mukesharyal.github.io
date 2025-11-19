@@ -118,7 +118,7 @@
         overflow: visible;
         touch-action: none;
         transition: transform 200ms ease-in-out;
-        user-select: none;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .outline:focus{

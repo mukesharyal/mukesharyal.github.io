@@ -5,8 +5,8 @@ import { base } from '$app/paths'
 export const posts = [
   
     {
-        url: "i-love-the-web",
-        title: "I ❤️ The Web",
+        url: "on-the-web",
+        title: "On The Web",
         date: "16th Nov, 2025",
         hero: "/globe.svg",
         alt: "Graphic depiction of a globe",

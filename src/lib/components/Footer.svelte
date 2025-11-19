@@ -5,7 +5,7 @@
 <footer class="footer">
   <p>© 2025 Mukesh Aryal. All rights reserved.</p>
   <ul class="links">
-    <li><a href={LinkHandler('/')}>Find me on Twitter</a></li>
+    <li><a target="_blank" href="https://x.com/iammukesharyal">Find me on Twitter</a></li>
     <li><a href={LinkHandler('/')}>Privacy Policy</a></li>
   </ul>
 </footer>

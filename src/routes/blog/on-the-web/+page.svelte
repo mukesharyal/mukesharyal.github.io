@@ -28,7 +28,7 @@ import Footer from "$lib/components/Footer.svelte";
             <header class="header">
 
                 <h1>
-                    About The Web
+                    On The Web
                 </h1>
 
                 <h2>
@@ -272,11 +272,6 @@ import Footer from "$lib/components/Footer.svelte";
                 </p>
 
             </section>
-
-
-            <footer>
-                We will need some more things here!!!
-            </footer>
 
         </main>
 
