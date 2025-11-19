@@ -396,6 +396,7 @@
         height: 20vh;
         cursor: pointer;
         margin-top: 1rem;
+        user-select: none;
     }
 
 
