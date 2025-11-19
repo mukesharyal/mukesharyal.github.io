@@ -20,14 +20,6 @@ export const posts = [
 
 
 export const LinkHandler = (link) => {
-    
-  if (process.env.NODE_ENV === 'development') {
-    return link
-  }
-
-  if (link === '/') {
-    return base
-  }
 
   return base + link
 }
