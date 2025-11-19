@@ -321,6 +321,7 @@ import Footer from "$lib/components/Footer.svelte";
         background-color: var(--primary-background);
         padding-block: 1rem;
         margin-block: 1rem;
+        font-size: 1.5em;
     }
 
     .main a{
