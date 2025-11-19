@@ -12,7 +12,7 @@
 
 <nav aria-label="Main Navigation" class="nav-container">
 
-    <a href={LinkHandler('/')} class="logo" aria-label="Homepage">
+    <a href={LinkHandler('/')} class="logo" aria-label="Homepage" data-sveltekit-reload>
       मुकेश अर्याल
     </a>
 
