@@ -35,8 +35,29 @@
 			}
 		</style>
 		%sveltekit.head%
+
+		<script>
+            // Define the global function Cloudflare's script will call.
+            // This function is now guaranteed to exist before the script loads.
+            window.loadTurnstile = function () {
+                console.log('Turnstile script called the global callback.');
+                
+                // Dispatch a custom event on the window object 
+                // to signal to your Svelte components that 'turnstile' is ready.
+                const event = new Event('turnstile-script-loaded');
+                window.dispatchEvent(event);
+            };
+        </script>
+
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=loadTurnstile" defer ></script>
+
 	</head>
+
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+
+		<div style="display: contents">
+			%sveltekit.body%
+		</div>
+
 	</body>
 </html>

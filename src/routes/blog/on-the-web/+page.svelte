@@ -1,9 +1,12 @@
 <script>
     import { LinkHandler } from "$lib";
-import Footer from "$lib/components/Footer.svelte";
+
     import Outline from "$lib/components/Outline.svelte";
 
+    import ImageHolder from "$lib/components/ImageHolder.svelte";
+
     import { onMount } from "svelte";
+    import LikeButton from "$lib/components/LikeButton.svelte";
 
     let elements = $state(null);
 
@@ -51,7 +54,8 @@ import Footer from "$lib/components/Footer.svelte";
                 <header>
 
                     <figure>
-                        <img src={LinkHandler('/undersea-cables.png')} alt="Map of Undersea Cables" />
+
+                        <ImageHolder imageSource='/undersea-cables.png' imageAlt="Map of Undersea Cables" />
 
                         <figcaption>
                             The map of the undersea cables that carry the internet.
@@ -273,6 +277,10 @@ import Footer from "$lib/components/Footer.svelte";
 
             </section>
 
+            <footer>
+                <LikeButton />
+            </footer>
+
         </main>
 
     </div>
@@ -342,6 +350,11 @@ import Footer from "$lib/components/Footer.svelte";
         margin-bottom: 2rem;
     }
 
+    .main footer{
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
     .main .header > h1{
         text-align: center;
         font-weight: bold;
@@ -367,10 +380,6 @@ import Footer from "$lib/components/Footer.svelte";
 
     .main section{
         padding: 1rem;
-    }
-
-    .main section img{
-        max-width: 100%;
     }
 
     .main section figcaption{
