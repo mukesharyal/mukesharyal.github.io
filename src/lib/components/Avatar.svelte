@@ -416,7 +416,7 @@
         transform: scale(0.6);
     }
 
-    .avatar:hover .hand{
-        animation: wave 1s ease-in-out infinite alternate;
+    .avatar:hover .hand, .avatar:focus .hand{
+        animation: wave 1s ease-in-out 3 alternate forwards;
     }
 </style>

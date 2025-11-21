@@ -2,11 +2,23 @@
 
     import { onMount } from "svelte";
 
+    import { getLikes, increaseLike, decreaseLike } from "$lib/likeApi";
+
+    let { currentPage } = $props();
+
     let hearted = $state(false);
+
+    // let captchaPassed = $state(false);
 
     let captchaPassed = $state(false);
 
     let widgetId = null;
+
+    let turnstileToken = null;
+
+    let captchaAnimate = $state(false);
+
+    let hearts = $state(0);
 
     function initializeTurnstile()
     {
@@ -20,14 +32,21 @@
             {
                 captchaPassed = true;
 
-                turnstile.remove(widgetId);
+                setTimeout(() => {
+
+                    turnstile.remove(widgetId);
+
+                }, 1000);
+
+                turnstileToken = token;
+
             },
 
-            ["error-callback"]: function (error)
+            'error-callback': function (error)
             {
                 captchaPassed = false;
 
-                turnstile.execute(widgetId);
+                turnstile.reset(widgetId);
             }
         });
 
@@ -38,6 +57,17 @@
     onMount(() => {
         // 1. Add listener for the custom event
         window.addEventListener('turnstile-script-loaded', initializeTurnstile);
+
+        (async () => {
+
+            hearts = await getLikes(currentPage);
+
+        })();
+
+        if(localStorage.getItem(currentPage))
+        {
+            hearted = true;
+        }
         
         // 2. IMPORTANT: Check if the script loaded *before* the component mounted.
         // This handles cases where the event has already fired.
@@ -52,15 +82,44 @@
     });
 
 
-    function toggleHeart()
+
+
+    async function toggleHeart()
     {
         if(captchaPassed)
         {
             hearted = !hearted;
+
+            hearts += hearted ? 1 : -1;
+
+            if(hearted)
+            {
+                // When the post is liked, get the uuid of the like from the database, and store it in localStorage
+                
+                let response = await increaseLike(currentPage, turnstileToken);
+
+                localStorage.setItem(currentPage, response);
+            }
+            else
+            {
+                // Now, to be able to decrease the like, we need to provide the uuid of the like
+
+                const likeId = localStorage.getItem(currentPage);
+
+                await decreaseLike(currentPage, likeId, turnstileToken);
+
+                localStorage.removeItem(currentPage);
+            }
         }
         else
         {
-            alert("Please verify the captcha first!");
+            captchaAnimate = true;
+
+            setTimeout(() => {
+
+                captchaAnimate = false;
+
+            }, 2000);
         }
     }
 
@@ -69,7 +128,7 @@
 
 </script>
 
-<div id="turnstile-container"></div>
+<div id="turnstile-container" class:animated={captchaAnimate}></div>
 
 <div class="like-button-container">
     <button aria-label="Toggle Heart" onclick={ toggleHeart }>
@@ -191,7 +250,7 @@
     </button>
 
     <p>
-        0
+        { hearts }
     </p>
 </div>
 
@@ -238,6 +297,19 @@
 
     #turnstile-container{
         margin-block: 1rem;
+        width: fit-content;
+    }
+
+    #turnstile-container.animated{
+        animation: expand 1s ease-in-out 2 forwards;
+    }
+
+    @keyframes expand{
+
+        50%{
+            transform: scale(1.2);
+            transform-origin: center;
+        }
     }
 
 </style>

@@ -1,4 +1,7 @@
 <script>
+
+    import { page } from "$app/state";
+
     import { LinkHandler } from "$lib";
 
     import Outline from "$lib/components/Outline.svelte";
@@ -16,6 +19,8 @@
     })
 
     let container;
+
+    let currentPage = page.url.pathname.split('/').filter(Boolean).pop();;
 
 </script>
 
@@ -278,7 +283,7 @@
             </section>
 
             <footer>
-                <LikeButton />
+                <LikeButton {currentPage} />
             </footer>
 
         </main>

@@ -84,8 +84,8 @@
 
     .close-button{
         position: absolute;
-        top: 1rem;
-        right: 1rem;
+        top: 2rem;
+        right: 2rem;
         border: none;
         background-color: #FF3F00AA;
         backdrop-filter: blur(10px);
@@ -95,14 +95,6 @@
         padding: 1rem;
         border-radius: 5rem;
         cursor: pointer;
-    }
-
-    @media (max-width: 600px)
-    {
-        .close-button{
-            right: unset;
-            left: 1rem;
-        }
     }
 
     @keyframes pulse{

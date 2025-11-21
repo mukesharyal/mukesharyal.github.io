@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-import { base } from '$app/paths'
+import { base } from '$app/paths';
 
 export const posts = [
   
