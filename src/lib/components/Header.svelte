@@ -10,7 +10,7 @@
 
 
 
-<nav aria-label="Main Navigation" class="nav-container">
+<nav aria-label="Main Navigation" class="nav-container" data-nosnippet>
 
     <a href={LinkHandler('/')} class="logo" aria-label="Homepage">
       मुकेश अर्याल

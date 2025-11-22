@@ -2,7 +2,7 @@
     import { LinkHandler } from "$lib";
 
 </script>
-<footer class="footer">
+<footer class="footer" data-nosnippet>
   <p>© 2025 Mukesh Aryal. All rights reserved.</p>
   <ul class="links">
     <li><a target="_blank" href="https://x.com/iammukesharyal">Find me on Twitter</a></li>

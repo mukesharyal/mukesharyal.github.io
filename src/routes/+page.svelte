@@ -11,7 +11,7 @@
 
 <main class="main">
 
-    <header class="intro">
+    <header class="intro" data-nosnippet>
 
         <Avatar />
 

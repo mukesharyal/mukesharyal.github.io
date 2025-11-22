@@ -40,7 +40,6 @@
             // Define the global function Cloudflare's script will call.
             // This function is now guaranteed to exist before the script loads.
             window.loadTurnstile = function () {
-                console.log('Turnstile script called the global callback.');
                 
                 // Dispatch a custom event on the window object 
                 // to signal to your Svelte components that 'turnstile' is ready.
