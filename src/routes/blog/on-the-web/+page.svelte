@@ -356,7 +356,6 @@
     }
 
     .main footer{
-        margin-bottom: 1rem;
         padding: 1rem;
     }
 

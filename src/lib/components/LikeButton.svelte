@@ -8,17 +8,15 @@
 
     let hearted = $state(false);
 
-    // let captchaPassed = $state(false);
-
-    let captchaPassed = $state(false);
+    let captchaPassedState = $state('initial');
 
     let widgetId = null;
 
     let turnstileToken = null;
 
-    let captchaAnimate = $state(false);
-
     let hearts = $state(0);
+
+    let serverError = $state(false);
 
     function initializeTurnstile()
     {
@@ -26,31 +24,97 @@
 
             sitekey: "0x4AAAAAACCAiy6PwS9HNhLd",
             theme: "auto",
+            appearance: 'interaction-only',
             execution: "execute",
 
-            callback: function (token) 
+            callback: async function (token) 
             {
-                captchaPassed = true;
 
                 setTimeout(() => {
 
-                    turnstile.remove(widgetId);
+                    turnstile.reset(widgetId);
 
                 }, 1000);
 
                 turnstileToken = token;
 
+                if(hearted)
+                {
+                    // The post is already liked, so we need to dislike the post
+
+                    const likeId = localStorage.getItem(currentPage);
+
+                    if(localStorage.getItem(currentPage))
+                    {
+                        // And, if the token is present in the localStorage
+
+                        try {
+
+                            await decreaseLike(currentPage, likeId, turnstileToken);
+
+                            localStorage.removeItem(currentPage);
+
+                            hearted = false;
+
+                            captchaPassedState = 'verified';
+
+                            hearts--;
+
+                            turnstileToken = null;
+
+                        }
+                        catch
+                        {
+                            serverError = true;
+
+                            captchaPassedState = 'useless';
+
+                            turnstileToken = null;
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    // The post is not already liked, so we need to like the post
+
+                    try {
+
+                        let response = await increaseLike(currentPage, turnstileToken);
+
+                        localStorage.setItem(currentPage, response);
+
+                        hearted = true;
+
+                        captchaPassedState = 'verified';
+
+                        hearts++;
+
+                        turnstileToken = null;
+
+                    }
+                    catch
+                    {
+                        serverError = true;
+
+                        captchaPassedState = 'useless';
+
+                        turnstileToken = null;
+                    }
+                }
+
             },
 
             'error-callback': function (error)
             {
-                captchaPassed = false;
 
                 turnstile.reset(widgetId);
+
+                captchaPassedState = 'failed';
+
+                serverError = true;
             }
         });
-
-        turnstile.execute(widgetId);
     }
 
 
@@ -84,43 +148,14 @@
 
 
 
-    async function toggleHeart()
+    function toggleHeart()
     {
-        if(captchaPassed)
-        {
-            hearted = !hearted;
 
-            hearts += hearted ? 1 : -1;
+        captchaPassedState = 'verifying';
 
-            if(hearted)
-            {
-                // When the post is liked, get the uuid of the like from the database, and store it in localStorage
-                
-                let response = await increaseLike(currentPage, turnstileToken);
+        turnstile.reset(widgetId);
 
-                localStorage.setItem(currentPage, response);
-            }
-            else
-            {
-                // Now, to be able to decrease the like, we need to provide the uuid of the like
-
-                const likeId = localStorage.getItem(currentPage);
-
-                await decreaseLike(currentPage, likeId, turnstileToken);
-
-                localStorage.removeItem(currentPage);
-            }
-        }
-        else
-        {
-            captchaAnimate = true;
-
-            setTimeout(() => {
-
-                captchaAnimate = false;
-
-            }, 2000);
-        }
+        turnstile.execute();
     }
 
     
@@ -128,9 +163,9 @@
 
 </script>
 
-<div id="turnstile-container" class:animated={captchaAnimate}></div>
+<div id="turnstile-container"></div>
 
-<div class="like-button-container">
+<div class={`like-button-container ${ captchaPassedState === 'verifying' ? 'pulse' : '' }`}>
     <button aria-label="Toggle Heart" onclick={ toggleHeart }>
         <svg width="2rem" height="2rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class:is-grey={!hearted} aria-label={hearted ? "Hearted" : "Not hearted"} role="img" >
         <path
@@ -254,6 +289,21 @@
     </p>
 </div>
 
+{#if serverError}
+
+    <div class="error-container">
+        <div>
+            Some error occured! Please try again.
+        </div>
+        <button aria-label="Close" onclick={() => { serverError = false; }}>
+            <svg width="1.1rem" height="1.1rem" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ED5454" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"/>
+            </svg>
+        </button>
+    </div>
+
+{/if}
+
 
 
 
@@ -271,6 +321,10 @@
         cursor: pointer;
     }
 
+    .like-button-container.pulse button svg{
+        animation: pulse 1000ms linear alternate infinite;
+    }
+
     .like-button-container button{
         padding: 0;
         border: none;
@@ -283,12 +337,11 @@
     }
 
     .like-button-container button svg{
-        transition: all 200ms ease-in-out;
+        transition: filter 200ms ease-in-out;
     }
 
     .like-button-container button svg.is-grey {
         filter: grayscale(100%);
-        opacity: 0.5;
     }
 
     .like-button-container button svg:hover{
@@ -300,16 +353,48 @@
         width: fit-content;
     }
 
-    #turnstile-container.animated{
-        animation: expand 1s ease-in-out 2 forwards;
+    @keyframes pulse {
+
+        from{
+            filter: grayscale(20%);
+            transform: scale(1);
+        }
+
+        to{
+            filter: grayscale(100%);
+            transform: scale(1.1);
+        }
     }
 
-    @keyframes expand{
+    .error-container{
+        padding: 1rem;
+        background-color: #e5131222;
+        width: fit-content;
+        border-radius: 1rem;
+        color: #ED5454;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        line-height: 1;
+        margin-top: 2rem;
+    }
 
-        50%{
-            transform: scale(1.2);
-            transform-origin: center;
-        }
+    .error-container button{
+        padding: 0.4rem;
+        background-color: #e5131255;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 100vw;
+        transition: background-color 200ms ease-in-out;
+    }
+
+    .error-container button:hover{
+        background-color: #e5131288;
     }
 
 </style>
