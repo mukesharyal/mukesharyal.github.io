@@ -5,7 +5,7 @@
 
     import { LinkHandler, posts } from "$lib";
 
-    const { url, title, date, hero, alt, description } = posts[posts.length - 1];
+    // const { url, title, date, hero, alt, description } = posts[posts.length - 1];
 
 </script>
 
@@ -46,50 +46,43 @@
     <section class="blog-section">
 
         <h1>
-            Read my most recent blogs
+            Read my recent blog posts
         </h1>
 
         <div class="blogs-container">
 
-            <a class="blog" href={LinkHandler(`/blog/${url}`)}>
+            {#each posts as post}
 
-        
-                <figure>
+                <a class="blog" href={LinkHandler(`/blog/${post.url}`)}>
 
-                    <img src={LinkHandler(hero)} alt={alt} />
+                    <figure>
 
-                    <figcaption>
+                        <img src={LinkHandler(post.hero)} alt={post.alt} />
 
-                        { title }
-                    </figcaption>
+                        <figcaption>
+
+                            { post.title }
+                        </figcaption>
 
 
-                </figure>
+                    </figure>
 
-                <div>
-                    <p>
-                        { description }
-                    </p>
+                    <div class="blog-post-description">
 
-                    <p>
-                        Written on { date }
-                    </p>
-                </div>
+                        <p class="description">
+                            { post.description }
+                        </p>
 
-                    
-             
-            </a>
+                        <p class="date">
+                            Written on <strong> { post.date } </strong>
+                        </p>
+                    </div>      
+                
+                </a>
+            {/each}
 
         </div>
     </section>
-
-
-
-    <!-- <section class="blog">
-        {#each data.posts as post}
-            <BlogCard fileName={post} />
-        {/each}
-    </section> -->
 
 </main>
 
@@ -203,6 +196,8 @@
 
     .blogs-container{
         display: flex;
+        justify-content: space-between;
+        gap: 1rem;
     }
 
     .blogs-container a{
@@ -213,42 +208,57 @@
     .blog{
         background-color: var(--secondary-background);
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 1.5rem;
         padding: 1rem;
         max-width: 40vw;
         border-radius: 0.5rem;
     }
 
+    .blog-post-description{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
     .blog figure{
         margin: 0;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
     }
 
     .blog figure img{
-        max-width: 80%;
+        width: 10rem;
+        height: 10rem;
     }
 
     .blog p{
         text-align: justify;
+        line-height: 1.5;
+        font-size: 1rem;
+        margin: 0;
     }
 
-    @media (max-width: 1400px)
+    @media (max-width: 1000px)
     {
-        .blog{
-            max-width: unset;
-        }
-    }
-
-    @media (max-width: 600px)
-    {
-        .blog{
+        .blogs-container{
             flex-direction: column;
         }
-    }
 
+        .blog{
+            max-width: unset;
+            flex-direction: column;
+        }
+
+        .blog figure{
+            align-items: center;
+        }
+    }
 
 
 </style>

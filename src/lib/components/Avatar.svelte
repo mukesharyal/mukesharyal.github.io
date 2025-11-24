@@ -410,6 +410,8 @@
     .avatar .hand{
         transform-origin: bottom center;
         transform-box: fill-box;
+        animation: wave 1s ease-in-out alternate infinite forwards;
+        animation-play-state: paused;
     }
 
     .avatar:hover .smile{
@@ -417,6 +419,6 @@
     }
 
     .avatar:hover .hand, .avatar:focus .hand{
-        animation: wave 1s ease-in-out 3 alternate forwards;
+        animation-play-state: running;
     }
 </style>

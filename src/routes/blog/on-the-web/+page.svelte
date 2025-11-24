@@ -20,7 +20,7 @@
 
     let container;
 
-    let currentPage = page.url.pathname.split('/').filter(Boolean).pop();;
+    let currentPage = page.url.pathname.split('/').filter(Boolean).pop();
 
 </script>
 
@@ -60,7 +60,7 @@
 
                     <figure>
 
-                        <ImageHolder imageSource='/undersea-cables.png' imageAlt="Map of Undersea Cables" />
+                        <ImageHolder imageSource='/undersea_cables.png' imageAlt="Map of Undersea Cables" />
 
                         <figcaption>
                             The map of the undersea cables that carry the internet.
@@ -349,14 +349,16 @@
     .main p{
         line-height: 1.5;
         text-align: justify;
+        margin: 0;
     }
 
     .main .header{
         margin-bottom: 2rem;
+        padding-inline: 1rem;
     }
 
     .main footer{
-        padding: 1rem;
+        padding-inline: 1rem;
     }
 
     .main .header > h1{
@@ -384,6 +386,7 @@
 
     .main section{
         padding: 1rem;
+        margin-bottom: 2rem;
     }
 
     .main section figcaption{
@@ -391,10 +394,10 @@
         margin-block: 1rem;
     }
 
-    @media (max-width: 1400px)
+    @media (max-width: 1000px)
     {
         .content{
-            width: unset;
+            width: 100%;
         }
     }
 
