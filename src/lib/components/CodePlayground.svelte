@@ -12,11 +12,15 @@
 
     </div>
 
-    <div class="preview-container"> 
+    {#if codePreview}
 
-        {@render codePreview()}
+        <div class="preview-container">    
 
-    </div>
+            {@render codePreview()}   
+
+        </div>
+
+    {/if}
 
 </div>
 

@@ -2,7 +2,7 @@
 
     import { LinkHandler } from "$lib";
 
-    let { imageSource, imageAlt, figureCaption } = $props();
+    let { imageSource, imageAlt } = $props();
 
     let fullScreen = $state(false);
 

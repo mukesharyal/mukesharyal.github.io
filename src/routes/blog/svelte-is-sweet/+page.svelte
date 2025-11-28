@@ -436,11 +436,6 @@
         color: inherit;
     }
 
-    .main sup a{
-        text-decoration: none;
-        color: inherit;
-    }
-
     .main p{
         line-height: 1.5;
         text-align: justify;

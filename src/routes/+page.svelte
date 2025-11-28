@@ -198,6 +198,7 @@
         display: flex;
         justify-content: space-between;
         gap: 1rem;
+        flex-wrap: wrap;
     }
 
     .blogs-container a{
@@ -211,7 +212,7 @@
         justify-content: space-between;
         gap: 1.5rem;
         padding: 1rem;
-        max-width: 40vw;
+        width: 40vw;
         border-radius: 0.5rem;
     }
 
@@ -251,7 +252,7 @@
         }
 
         .blog{
-            max-width: unset;
+            width: unset;
             flex-direction: column;
         }
 
