@@ -40,7 +40,7 @@
 
     <ul class="nav-list { isOpen ? 'open' : 'closed' }">
         <li class="nav-item"><a href={LinkHandler('/blog')} class="nav-link">Blog</a></li>
-        <li class="nav-item"><a href={LinkHandler('/')} class="nav-link">Projects</a></li>
+        <li class="nav-item"><a href={LinkHandler('/resume.pdf')} class="nav-link">Resume</a></li>
         <li class="nav-item"><a href={LinkHandler('/')} class="nav-link">Contact</a></li>
     </ul>
 
